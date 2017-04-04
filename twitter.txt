@@ -1,0 +1,164 @@
+CREATE (user1:User { name:"Jagan",handle:"@jagan",email:"jaganchnv@gmail.com",password:"12345678",dob:"August 5, 1995" })
+CREATE (user2:User { name:"Datta",handle:"@datta",email:"tssd19@gmail.com",password:"datta",dob:"october 12, 1995" })
+CREATE (user3:User { name:"Jami",handle:"@dileep",email:"dileepkumarjami@gmail.com",password:"jami",dob:"February 11, 1996" })
+CREATE (user4:User { name:"Ganesh",handle:"@ganesh",email:"ganeshallampalli@gmail.com",password:"konda",dob:"June 1, 1995" })
+CREATE (user5:User { name:"Sashaank",handle:"@sashaank",email:"sashaank@gmail.com",password:"banda",dob:"August 5, 1995",dob:"August 5, 1995" })
+CREATE (user6:User { name:"Vishnu",handle:"@vishnu",email:"bhogadhijaswanth@gmail.com",password:"vishnu",dob:"August 25, 1995" })
+CREATE (user7:User { name:"Harsha",handle:"@harsha",email:"harsha@gmail.com",password:"harsha",dob:"July 5, 1995" })
+CREATE (user8:User { name:"Yaswanth",handle:"@yaswanth",email:"yaswanth@gmail.com",password:"yaswanth",dob:"June 23, 1995" })
+CREATE (user9:User { name:"Dhruva",handle:"@dhruva",email:"dhruvaadike@gmail.com",password:"dhruva",dob:"May 14, 1995" })
+CREATE (user10:User { name:"Sudhakar",handle:"@sudhakar",email:"uzumakinaruto@gmail.com",password:"sudhakar",dob:"April 10, 1995" })
+CREATE (user11:User { name:"Harshit",handle:"@harshit",email:"harshitraviprolu@gmail.com",password:"harshit",dob:"March 28, 1995" })
+
+
+
+CREATE (tweet1: Tweet { text:"My first Tweet :) #Excited #twitter"}) 
+CREATE (tweet2: Tweet { text:"Don't know why people are after #messenger #hike also provide the same #One_Indian_App @datta"}) 
+CREATE (tweet3: Tweet { text:"People like me do not lie .Do you know why ? @ganesh #funnychallenge"}) 
+CREATE (tweet4: Tweet { text:"Eagerly waiting... #Baahubali2 #rajamouli"}) 
+CREATE (tweet5: Tweet { text:"Waiting for Magnum opus #Baahubali2 #rana #rajamouli"}) 
+CREATE (tweet6: Tweet { text:"Enjoying to the peaks #Ragam #NITC @dileep @ganesh"}) 
+
+
+CREATE (tweet7: Tweet { text:"I am going home. hehe"})
+CREATE (tweet8: Tweet { text:"Wow I like sweets like anything"})
+CREATE (tweet9: Tweet { text:"Do u know that I am a foodie?"})
+CREATE (tweet10: Tweet { text:"I thoroughly enjoyed the party?"}) 
+
+
+
+MATCH(user1:User {name:'Jagan'}),(user6:User {name:'Vishnu'}),(user7:User {name:'Harsha'}),(user3:User {name:'Jami'}),(user5:User {name:'Sashaank'},(user2:User {name:'Ganesh'}))
+CREATE(user2)-[r1:follows]->(user1)
+CREATE(user2)-[r2:follows]->(user5)
+CREATE(user7)-[r3:follows]->(user3)
+CREATE(user5)-[r4:follows]->(user3)
+
+
+MATCH(user1:User {name:'Jagan'}),(user2:User {name:'Datta'}),(user4:User {name:'Ganesh'}),(user8:User {name:'Yaswanth'}),(user9:User {name:'Dhruva'}),(user6:User {name:'Vishnu'}),(user7:User {name:'Harsha'}),(user3:User {name:'Jami'}),(user5:User {name:'Sashaank'}),(user10:User {name:'Sudhakar'})
+,(user11:User {name:'Harshit'}),(t1:Tweet)
+WHERE ID(t1)=11
+CREATE(user1)-[r1:likes]->(t1)
+CREATE(user2)-[r2:likes]->(t1)
+CREATE(user3)-[r3:likes]->(t1)
+CREATE(user4)-[r4:likes]->(t1)
+CREATE(user5)-[r5:likes]->(t1)
+CREATE(user6)-[r6:likes]->(t1)
+CREATE(user7)-[r7:likes]->(t1)
+CREATE(user8)-[r8:likes]->(t1)
+CREATE(user9)-[r9:likes]->(t1)
+CREATE(user10)-[r10:likes]->(t1)
+CREATE(user11)-[r11:likes]->(t1)
+
+
+MATCH(user4:User {name:'Harshit'}),(user11:User {name:'Dhruva'})
+CREATE(user4)-[r7:follows]->(user11)
+
+
+MATCH (user2:User {name:"Vishnu"}) , (t1:Tweet)
+WHERE ID(t1)=20
+CREATE(user2)-[r1:posts]->(t1)
+
+
+MATCH (user2:User {name:"Harsha"}) , (t1:Tweet)
+WHERE ID(t1)=13
+CREATE(user2)-[r1:likes]->(t1)
+
+
+MATCH (user2:User {name:"Dhruva"}) , (t1:Tweet)
+WHERE ID(t1)=15
+CREATE(user2)-[r1:posts]->(t1)
+
+MATCH (user1:User {name:"Ganesh"}) , (t6:Tweet)
+WHERE ID(t6)=21
+CREATE(user1)-[r2:posts]->(t6)
+
+MATCH (user3:User {name:"Rohith"}) , (t3:Tweet)
+WHERE ID(t3)=24
+CREATE(user3)-[r3:posts]->(t3)
+
+
+MATCH (a)
+WHERE ID(a) = 17
+DELETE a
+
+MATCH (u:)-[r:follows]-(t2: User) 
+WHERE ID(u)=23 AND ID(t2)=1
+DELETE r
+
+MATCH (user1:User {name:"Sashaank"}) , (t4:Tweet)
+WHERE ID(t3)=14
+CREATE(user1)-[r1:posts]->(t3)
+
+
+CREATE (t2: Tweet { text:"Don't know why people are after #messenger #hike also provides the same #One_Indian_App @datta", })
+MATCH (user1:User {name:"Sashaank"}) , (t2:Tweet) 
+WHERE ID()=,(t3:Tweet)
+WHERE ID(t3)=71
+CREATE(user1)-[r1:posts]->(t2)
+CREATE (t3)-[r2:retweet]->(t2)
+
+
+match (t2:Tweet)
+WHERE ID(t2)=71 
+with t2 as map 
+create (copy:Tweet) 
+set copy=map return copy
+
+
+
+
+match (t2:Tweet)
+WHERE ID(t2)=10
+SET t2.parent=[73]+10
+return t2
+
+
+
+MATCH (n)
+WHERE ID(n)=0
+DETACH DELETE n
+CREATE(user4)-[r1:posts]->(t2)
+
+MATCH (user3:User {name:"Jami"}) , (t2:Tweet)
+WHERE ID(t2)=71
+CREATE(user3)-[r1:posts]->(t2)
+
+MATCH(user1:User {name:'Jagan'}),(user3:User {name:'Jami'})
+CREATE(user1)-[r1:follows]->(user3)
+CREATE(user3)-[r2:follows]->(user1)
+
+
+MATCH(user2:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+MATCH(user3:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+MATCH(user4:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+MATCH(user4:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+MATCH(user4:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+MATCH(user4:User {name:'Ganesh'}),(user3:User {name:'jami'})
+CREATE(user4)-[r:follows]->(user3)
+
+
+MATCH (:User {name: "Jagan"})-[r1:follows]-(:User {name:"Datta"}) 
+DELETE r1
+
+MATCH (u:User {name: "Jami"})-[r1:posts]-(t:Tweet) 
+COUNT(t) as cnt
+
+$count = cnt;
+
+
+
+match (user:User {name:'Jami'})
+optional match (o)<-[r:TEAMMEMBER_OF|:BOARDMEMBER_OF|:FOUNDER_OF]-(u:User) 
+with o, count(u) as cnt // of Org has no members we get 0
+where cnt < 5
+return o, cnt
